@@ -41,12 +41,12 @@ module FourBitAdder(
        begin
            if(carry == 1'b0)
            begin
-               z=1'b1;
+               z=1'b0;
            end
        end
        else
        begin
-        z=1'b0;
+        z=1'b1;
        end
     end
 endmodule

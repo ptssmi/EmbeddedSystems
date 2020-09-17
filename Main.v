@@ -27,7 +27,7 @@ module Main(
     output reg CF,
     output reg Z,
     input [1:0] CTRL,
-    input CLK
+    input TOGGLE
     );
     
     wire [3:0] OUTADD;
@@ -49,36 +49,38 @@ module Main(
     AND          s1(IN1,IN2,OUTAND,ZAND,CFAND);
     NOT          s2(IN1,OUTNOT,ZNOT,CFNOT);
     ZERO         s3(IN1,OUTZERO,ZZERO,CFZERO);
-    
-    always@(CLK)
+
+    always@*
     begin
-        case(CTRL)
-            2'b00: 
-                   begin
-                   OUT = OUTADD;
-                   CF = CFADD;
-                   Z = ZADD;
-                   end
-            2'b01:
-                   begin
-                   OUT = OUTAND;
-                   CF = CFAND;
-                   Z = ZAND;
-                   end
-            2'b10:
-                   begin
-                   OUT = OUTNOT;
-                   CF = CFNOT;
-                   Z = ZNOT;
-                   end
-            2'b11:
-                   begin
-                   OUT = OUTZERO;
-                   CF = CFZERO;
-                   Z = ZZERO;
-                   end
-        
-        endcase
+        if(TOGGLE == 1'b1)
+        begin
+            case(CTRL)
+                2'b00: 
+                       begin
+                       OUT = OUTADD;
+                       CF = CFADD;
+                       Z = ZADD;
+                       end
+                2'b01:
+                       begin
+                       OUT = OUTAND;
+                       CF = CFAND;
+                       Z = ZAND;
+                       end
+                2'b10:
+                       begin
+                       OUT = OUTNOT;
+                       CF = CFNOT;
+                       Z = ZNOT;
+                       end
+                2'b11:
+                       begin
+                       OUT = OUTZERO;
+                       CF = CFZERO;
+                       Z = ZZERO;
+                       end
+            endcase
+        end
     end    
     
 endmodule
