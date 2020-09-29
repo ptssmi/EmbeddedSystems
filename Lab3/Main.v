@@ -57,6 +57,7 @@ module Main(
                 end                   
                 else
                 begin
+                    #1000;
                     state = 4'b0010; 
                 end
                 
@@ -66,24 +67,28 @@ module Main(
             begin
                 Light1 = 3'b100; //red
                 Light2 = 3'b101; //yellow
+                #500;
                 state = 4'b0100; //state 4
             end
             4'b0011: //state 3
             begin
                 Light1 = 3'b100; //red
                 Light2 = 3'b101; //yellow
+                #500;
                 state = 4'b0101; //state 5
             end
             4'b0100: //state 4
             begin 
                 Light1 = 3'b100; //red
                 Light2 = 3'b100; //red
+                #500;
                 state = 4'b0110; //state 6
             end
             4'b0101: //state 5
             begin
                 Light1 = 3'b100; //red
                 Light2 = 3'b100; //red
+                #2000;
                 state = 4'b0110; //state 6
                 //some sort of delay
             end
@@ -106,6 +111,7 @@ module Main(
                 end                   
                 else
                 begin
+                    #1000;
                     state = 4'b0111; //state 7
                 end
             end
@@ -113,24 +119,28 @@ module Main(
             begin
                 Light1 = 3'b101; //yellow
                 Light2 = 3'b100; //red
+                #500;
                 state = 4'b1001; //state 9
             end
             4'b1000: //state 8
             begin
                 Light1 = 3'b101; //yellow
                 Light2 = 3'b100; //red
+                #500;
                 state = 4'b1010; //state 10
             end
             4'b1001: //state 9
             begin
                 Light1 = 3'b100; //red
                 Light2 = 3'b100; //red
+                #500;
                 state = 4'b0001; //state 1
             end
             4'b1010: //state 10
             begin
                 Light1 = 3'b100; //red
                 Light2 = 3'b100; //red
+                #2000;
                 state = 4'b0001; //state 1
                 //some sort of delay
             end
@@ -138,17 +148,19 @@ module Main(
             begin
                 if(PowerOutage == 1)
                 begin
-                    Light1 = 3'b101; //red
-                    Light2 = 3'b101; //red
-                    //need to make these flash
-                    //wait time 1 secondo
+                    Light1 = 3'b101; //yellow
+                    Light2 = 3'b101; //yellow
+                    #1000;
                     Light1 = 3'b000; //off
                     Light2 = 3'b000; //off
-                    //wait time 1 second
+                    #1000;
                 end
                 else
                 begin
+                    if(PowerOutage == 0)
+                    begin
                     state = 4'b0001; //state 1
+                    end
                 end
             end
 
@@ -158,12 +170,12 @@ module Main(
                 begin
                     Light1 = 3'b100; //red
                     Light2 = 3'b100; //red
-                    //need to make these flash
-                    //wait time 1 secondo
+                    #1000;
                     Light1 = 3'b000; //off
                     Light2 = 3'b000; //off
-                    //wait time 1 second
+                    #1000;
                 end
+                #10000;
                 state = 4'b0001; //state 1
             end
 

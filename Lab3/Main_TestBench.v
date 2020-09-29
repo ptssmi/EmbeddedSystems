@@ -33,45 +33,31 @@ module Main_TestBench(
      
       Main U1(Emergency,PowerOutage,Pedestrian,clk,Light1,Light2,state);
       
+      always
+      begin
+        clk = 1'b0;
+        #10;
+        clk = 1'b1;
+        #10;
+      end
+          
       initial begin
-      Emergency=1'b0;
-      PowerOutage=1'b0;
+      Emergency=0;
+      PowerOutage=0;
       Pedestrian=0;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      clk = 0;
-      #10;
-      clk = 1;
-      #10;
-      
-      
-      
+      #100
+      Pedestrian=1;
+      #100
+      Pedestrian=0;
+      #100
+      Emergency=1;
+      #100
+      Emergency=0;
+      #100
+      PowerOutage=1;
+      #100
+      PowerOutage=0;
       
       end
+      
 endmodule
