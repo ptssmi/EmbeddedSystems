@@ -30,9 +30,11 @@ module Main(
     output reg [3:0] state
     );
     
+   reg newState; 
    integer delayCount;
     initial begin
         state = 4'b0001;
+        newState = 1'b1;
     end
     
     always @(posedge clk)
@@ -40,24 +42,34 @@ module Main(
         case(state)
             4'b0001: //state 1
 				begin
-					state = 4'b0010; //assume the next state will be state 2
-					Light1 = 3'b100; //red
-					Light2 = 3'b001; //green
-
-					for(delayCount=0;delayCount<100;delayCount=delayCount+1) begin
-						if(Emergency == 1'b1)
-						begin
+					if(newState == 1'b1)begin
+					   Light1 = 3'b100; //red
+					   Light2 = 3'b001; //green
+					   delayCount = 0;
+					   newState= 1'b0;
+					end
+					
+					if(delayCount ==50)begin
+					   newState = 1'b1;
+					   state = 4'b0010; 
+					end
+		            
+		            else begin
+		               if(Emergency == 1'b1)begin
+					        newState = 1'b1;		
 							state = 4'b1100; //goes to emergency state
-						end
-						else if(PowerOutage == 1'b1)
-						begin
+					   end
+						else if(PowerOutage == 1'b1) begin
+							newState = 1'b1;
 							state = 4'b1011;; //goes to poweroutage state
 						end
-						else if(Pedestrian == 1'b1)
-						begin
+						else if(Pedestrian == 1'b1)begin
+							newState = 1'b1;
 							state = 4'b0011; //goes to pedestrain state
-						end                   
+						end
+						delayCount = delayCount +1;                   
 		            end    
+		               
 				end
         
            4'b0010: //state 2
