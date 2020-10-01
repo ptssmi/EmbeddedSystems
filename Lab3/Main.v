@@ -39,29 +39,26 @@ module Main(
     begin
         case(state)
             4'b0001: //state 1
-               begin
-                Light1 = 3'b100; //red
-                Light2 = 3'b001; //green
-            
-                if(Emergency == 1'b1)
-                begin
-                    state = 4'b1100; //goes to emergency state
-                end
-                else if(PowerOutage == 1'b1)
-                begin
-                    state = 4'b1011;; //goes to poweroutage state
-                end
-                else if(Pedestrian == 1'b1)
-                begin
-                    state = 4'b0011; //goes to pedestrain state
-                end                   
-                else
-                begin
-                    #1000;
-                    state = 4'b0010; 
-                end
-                
-               end
+				begin
+					state = 4'b0010; //assume the next state will be state 2
+					Light1 = 3'b100; //red
+					Light2 = 3'b001; //green
+
+					for(delayCount=0;delayCount<100;delayCount=delayCount+1) begin
+						if(Emergency == 1'b1)
+						begin
+							state = 4'b1100; //goes to emergency state
+						end
+						else if(PowerOutage == 1'b1)
+						begin
+							state = 4'b1011;; //goes to poweroutage state
+						end
+						else if(Pedestrian == 1'b1)
+						begin
+							state = 4'b0011; //goes to pedestrain state
+						end                   
+		            end    
+				end
         
            4'b0010: //state 2
             begin
