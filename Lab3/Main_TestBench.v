@@ -45,18 +45,18 @@ module Main_TestBench(
       Emergency=0;
       PowerOutage=0;
       Pedestrian=0;
-      #100
-      Pedestrian=1;
-      #100
-      Pedestrian=0;
-      #100
-      Emergency=1;
-      #100
-      Emergency=0;
-      #100
-      PowerOutage=1;
-      #100
-      PowerOutage=0;
+      //#100
+      //Pedestrian=1;
+      //#100
+      //Pedestrian=0;
+      //#100
+      //Emergency=1;
+      //#100
+      //Emergency=0;
+      //#100
+      //PowerOutage=1;
+      //#100
+      //PowerOutage=0;
       
       end
       
