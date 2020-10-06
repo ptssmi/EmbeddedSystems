@@ -141,11 +141,15 @@ module Main(
                     if(Emergency == 1'b1)
                     begin
                         delayCount = 0;
+                        Light1 = 3'b100; //red
+                        Light2 = 3'b100; //red  
                         state = 4'b1100; //goes to emergency state
                     end
                     else if(PowerOutage == 1'b1)
                     begin
                         delayCount =0;
+                        Light1 = 3'b010; //yellow
+                        Light2 = 3'b010; //yellow
                         state = 4'b1011;; //goes to poweroutage state
                     end
                     else if(Pedestrian == 1'b1)
@@ -233,8 +237,8 @@ module Main(
                     delayCount2 = delayCount2 + 1;
                     if(delayCount == 50000000)
                     begin
-                        Light1[3] = ~Light1[3];
-                        Light2[3] = ~Light2[3];
+                        Light1[2] = ~Light1[2];
+                        Light2[2] = ~Light2[2];
                         delayCount = 0;
                     end
                     else
