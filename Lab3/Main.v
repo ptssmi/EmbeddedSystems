@@ -242,7 +242,7 @@ module Main(
                         delayCount = delayCount + 1;
                     end
                 end
-            
+            end
             4'b1101: //state 13
             begin 
                 if(delayCount == 50000000)
