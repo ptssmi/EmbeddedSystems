@@ -31,13 +31,16 @@ module MainTB(
     reg quarters;
     reg dollars;
     reg  [7:0] item;
-    wire [3:0] change;
+    wire change;
     wire [3:0] state;
     wire emptystatus;
     wire notenoughmoney;
     wire vend;
+    wire changeflag;
+    wire delayCount;
+
     
-    Main U1(clk,inp,cash,credit,done,quarters,dollars,item,change,state,emptystatus,notenoughmoney,vend);
+    Main U1(clk,inp,cash,credit,done,quarters,dollars,item,change,state,emptystatus,notenoughmoney,vend,changeflag,delayCount);
 
     always
       begin
@@ -48,36 +51,46 @@ module MainTB(
       end
 
     initial begin
+
+      inp = 0;
+      cash = 0;
+      credit = 0;
+      done = 0;
+      quarters = 0;
+      dollars = 0;
+      item = 8'b00000000;
+
+
         //CREDIT TEST
-        // credit = 1;
-        // #1000;
-        // credit = 0;
-        // #100
-        // item=8'b00000001;
-        // #100;
-        //  item=8'b00000010;
-        // #100;
+        credit = 1;
+        #1000;
+        credit = 0;
+        #100
+        item=8'b00000001;
+        #100;
+         item=8'b00000010;
+        #100;
 
         //CASH TEST for exact change
-        // cash = 1;
-        // #1000;
-        // cash = 0;
-        // #100;
-        // quarters = 1;
-        // #100;
-        // quarters = 0;
-        // #100;
-        // quarters = 1;
-        // #100;
-        // quarters = 0;
-        // #100;
-        // done = 1;
-        // #10000;
-        // done = 0;
-        // #100;
-        // item=8'b00000001; //empty item
-        // #100;
-        // item=8'b00000010; //not empty item
+        cash = 1;
+        #1000;
+        cash = 0;
+        #100;
+        quarters = 1;
+        #100;
+        quarters = 0;
+        #100;
+        quarters = 1;
+        #100;
+        quarters = 0;
+        #100;
+        done = 1;
+        #100;
+        done = 0;
+        #100;
+        item=8'b00000001; //empty item
+        #100;
+        item=8'b00000010; //not empty item
 
         //cash test for more than exact change 
         cash = 1;
@@ -97,7 +110,7 @@ module MainTB(
         quarters = 0;
         #100;
         done = 1;
-        #10000;
+        #100;
         done = 0;
         #100;
         item=8'b00000001; //empty item

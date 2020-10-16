@@ -29,12 +29,14 @@ module Main(
     input quarters,
     input dollars,
     input [7:0] item,
-    output reg [3:0] change,
+    output reg change,
     output reg [3:0] state,
     output reg emptystatus,
     output reg notenoughmoney,
-    output reg vend
-   
+    output reg vend,
+    output reg changeflag,
+    output integer delayCount
+
     );
     
     integer quartercount;
@@ -43,7 +45,9 @@ module Main(
     integer quartertotal;
     integer cashtotal;
     integer itemprice;
-    integer delayCount;
+    integer integerchange;
+    integer changecounter;
+    //integer delayCount;
     
     reg TotalFullfilled;
     reg divclk;
@@ -58,6 +62,15 @@ module Main(
         delayCount = 0;
         vend = 0;
         divclk = 1'b0;
+        notenoughmoney = 0;
+        vend = 0;
+        change = 3'b000;
+        emptystatus = 0;
+        notenoughmoney = 0;
+        vend = 0;
+        changeflag = 0;
+        integerchange = 0;
+        changecounter = 0;
     end
     
     always@(posedge clk)begin
@@ -150,159 +163,173 @@ module Main(
                 case(item)
                         8'b00000001:
                             begin
+                                itemprice = 2;
                                 if(cashtotal == 2) //$0.50
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 2)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
                         8'b00000010:
                             begin
+                                itemprice = 2;
                                 if(cashtotal == 2) //$0.50
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 2)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
                         8'b00000100:
                             begin
+                                itemprice = 3;
                                 if(cashtotal == 3) //$0.75
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 3)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
                         8'b00001000:
                             begin
+                                itemprice = 3;
                                 if(cashtotal == 3) //$0.75
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 3)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
                         8'b00010000:
                             begin
+                                itemprice = 5;
                                 if(cashtotal == 5) //$1.25
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 5)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
                         8'b00100000:
                             begin
+                                itemprice = 5;
                                 if(cashtotal == 5) //$1.25
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 5)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
                         8'b01000000:
                             begin
+                                itemprice = 5;
                                 if(cashtotal == 5) //$1.25
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 5)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
                         8'b10000000:
                             begin
+                                itemprice = 5;
                                 if(cashtotal == 5) //$1.25
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0110; // state 6
                                 end
                                 else if(cashtotal > 5)
                                 begin
-                                    change = 1;
+                                    changeflag = 1;
                                     state = 4'b0110; // state 6
+                                end
                                 else
                                 begin
-                                    change = 0;
+                                    changeflag = 0;
                                     state = 4'b0111; //state 7
                                 end
                             end
-
                 endcase
-
             end
             
             4'b0110: //state 6
             begin
                 vend = 1;
-                if(delayCount == 2500)begin
+                if(delayCount == 25)begin
                     delayCount = 0;
                     vend = 0;
-                    // if(change == 1)
-                    // begin
-                    //     state = 4'b1000; //state 8
-                    // end
-                    // else
-                    // begin
-                    //     state = 4'b0000; //state 0
-                    // end  
+                    if(changeflag == 1)
+                    begin
+                        state = 4'b1000; //state 8
+                    end
+                    else
+                    begin
+                        state = 4'b0000; //state 0
+                    end  
                 end
                 delayCount = delayCount+1;
 
@@ -314,19 +341,30 @@ module Main(
                 notenoughmoney = 1;
                 //delay
                 notenoughmoney = 0;
-                state = 4'b0101; //state 5
+                state = 4'b0010; //state 2
             end
             
             4'b1000: //state 8
             begin
                 if(cashtotal > itemprice)
                 begin
-                    change = cashtotal - itemprice;
+                    integerchange = cashtotal - itemprice;
+                    itemprice = 0;
+                    if (integerchange == changecounter)
+                    begin
+                        changecounter = 0;
+                        integerchange = 0;
+                        state = 4'b0001;
+                    end
+                    else
+                        changecounter = changecounter + 1;
+                        change = 1;
+                        #100;
+                        change = 0;
+                    
                 end
-                //display change somehow
-                
-            
             end
+
             
             4'b1010: //state 10
             begin 
